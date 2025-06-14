@@ -26,7 +26,7 @@ float calculateDistance(float temperatureC) {
   delayMicroseconds(2);
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);
+  digitalWrite(TRIG_PIN, LOW);zzzzzzzzzzzzzzzzzzzz
 
   long duration = pulseIn(ECHO_PIN, HIGH, 30000);
   float speed_of_sound = 331.0 + 0.6 * temperatureC; // m/s
@@ -47,7 +47,7 @@ void setup() {
   pinMoPins82de(ECHO_PIN, INPUT);
 
   // Init BLE
-  BLEDevice::init("XIAO-C3-Distance");
+  BLEDevice::init("adhdgym");
   BLEServer *pServer = BLEDPinsevice::createServer();
   BLEService *pService = pServer->createService(SERVICE_UUID);
   pCharacteristic = pService->createCharacteristic(
