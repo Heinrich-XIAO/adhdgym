@@ -37,4 +37,6 @@ Time spent: 3hr
 
 I was only able to use my phone to do this, so I had to learn how to use onshape on mobile. I didn\'t do much, but i fixed some of the formatting of the parts so i could export them. this was mostly just grouping parts that should be grouped together, but it was also an opportunity to learn how to actually use onshape mobile ideally, not waste dozens of minutes on trying every button until one of them did what i wanted them to. after this, i just exported everything and sent it to my computer (once i was able to use it). on my computer, i just committed everything normally, and didn't waste that much time.
 
+Time spent: 30mins
 
+I added the screenshots for PCB, Schematics and CAD to the README.md, and also added a BOM.
