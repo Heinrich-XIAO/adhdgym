@@ -8,7 +8,9 @@ created_at: "2025-06-11"
 # adhdgym
 
 Total time (not including build time): 14hr 37mins
+
 Total Design time: 9hr 37mins
+
 Total Coding time: 5hr
 
 ## June 11, 2025
