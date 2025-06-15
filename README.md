@@ -12,6 +12,10 @@ adhdgym is a simple ultrasonic distance sensor that relays the distance to your 
 ## Schematics
 ![1749932353-wayshot](https://github.com/user-attachments/assets/394b0ce6-2377-497d-9def-252806eade68)
 
+## Client
+![1749993613-wayshot](https://github.com/user-attachments/assets/9e5725bb-5545-4c68-b3db-262c994fcd1c)
+
+
 ## BOM
  - PCB and Case (I can 3D print myself)
  - 1x4 DuPont connector 2.54mm Socket (i think i have some)
