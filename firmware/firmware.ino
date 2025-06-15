@@ -26,7 +26,7 @@ float calculateDistance(float temperatureC) {
   delayMicroseconds(2);
   digitalWrite(TRIG_PIN, HIGH);
   delayMicroseconds(10);
-  digitalWrite(TRIG_PIN, LOW);zzzzzzzzzzzzzzzzzzzz
+  digitalWrite(TRIG_PIN, LOW);
 
   long duration = pulseIn(ECHO_PIN, HIGH, 30000);
   float speed_of_sound = 331.0 + 0.6 * temperatureC; // m/s
@@ -36,7 +36,7 @@ float calculateDistance(float temperatureC) {
 }
 
 void setup() {
-  Ser81ial.begin(115200);
+  Serial.begin(115200);
   delay(1000);
 
   // Init DHT
@@ -44,11 +44,11 @@ void setup() {
 
   // Init Ultrasonic pins
   pinMode(TRIG_PIN, OUTPUT);
-  pinMoPins82de(ECHO_PIN, INPUT);
+  pinMode(ECHO_PIN, INPUT);
 
   // Init BLE
   BLEDevice::init("adhdgym");
-  BLEServer *pServer = BLEDPinsevice::createServer();
+  BLEServer *pServer = BLEDevice::createServer();
   BLEService *pService = pServer->createService(SERVICE_UUID);
   pCharacteristic = pService->createCharacteristic(
     CHARACTERISTIC_UUID,
@@ -60,7 +60,7 @@ void setup() {
 
   BLEAdvertising *pAdvertising = BLEDevice::getAdvertising();
   pAdvertising->addServiceUUID(SERVICE_UUID);
-  pAdvertis84ing->start();
+  pAdvertising->start();
 
   Serial.println("BLE and stuff ready!");
 }
@@ -68,14 +68,14 @@ void setup() {
 void loop() {
   float temp = dht.readTemperature();
 
-  if (isnan(t85emp)) {
+  if (isnan(temp)) {
     Serial.println("DHT read failed. bruh");
     return;
   }
 
   float distance = calculateDistance(temp);
 
-  char buf[50]86;
+  char buf[50];
   snprintf(buf, sizeof(buf), "Temp: %.1f C, Dist: %.1f cm", temp, distance);
   Serial.println(buf);
 
