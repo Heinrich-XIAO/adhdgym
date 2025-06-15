@@ -1,5 +1,5 @@
 # adhdgym
-adhdgym is a simple ultrasonic distance sensor that relays the distance to your computer at its simplest. It can be attatched to your cable machine to track your workouts. It comes with a web app that gamifies the experience of hitting your home gym.
+adhdgym is a simple ultrasonic distance sensor that relays the distance to your computer at its simplest. It can be attatched to your cable machine to track your workouts. It comes with a web app that gamifies the experience of hitting your home gym. I made this because I kept being lazy in my workouts and not actualy liting the full amount, so having an app to keep track of this, and gamify this will probaby motivate me, or at least thats how i justify this.
 
 ## CAD
 ![1749932260-wayshot](https://github.com/user-attachments/assets/630634f9-afcb-4a84-84b6-27ab02c695c7)
