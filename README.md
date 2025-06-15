@@ -17,8 +17,9 @@ adhdgym is a simple ultrasonic distance sensor that relays the distance to your 
 
 
 ## BOM
- - PCB and Case (I can 3D print myself)
+ - PCB and Case (I can 3D print myself)  $19.60 for pcb with jlc
  - 1x4 DuPont connector 2.54mm Socket (i think i have some)
- - Seeed XIAO ESP32-C3 https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html
- - DHT11 https://lcsc.com/product-detail/Temperature-and-Humidity-Sensor_Aosong-Guangzhou-Elec-DHT11_C117051.html?s_z=n_dht11
- - HC-SR04 Module https://www.aliexpress.com/item/1005008259734214.html (if this link rots one day, just make sure to get one that has the pins on the non-speaker side)
+ - Seeed XIAO ESP32-C3 https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html  $24.40 (why is shipping so expensive :sob:)
+ - DHT11 https://lcsc.com/product-detail/Temperature-and-Humidity-Sensor_Aosong-Guangzhou-Elec-DHT11_C117051.html?s_z=n_dht11 $18.43 (how is the cheapest shipping still $11.44 :sob::sob:)
+ - HC-SR04 Module https://www.aliexpress.com/item/1005008259734214.html (if this link rots one day, just make sure to get one that has the pins on the non-speaker side) $2.65
+
