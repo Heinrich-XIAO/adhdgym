@@ -40,3 +40,7 @@ I was only able to use my phone to do this, so I had to learn how to use onshape
 Time spent: 30mins
 
 I added the screenshots for PCB, Schematics and CAD to the README.md, and also added a BOM.
+
+Time spent: 2hr
+
+Writing firmware is hard. Especially when you don't have the microcontroller or even something similar to the one you're using. 
