@@ -7,6 +7,8 @@ created_at: "2025-06-11"
 
 # adhdgym
 
+Total Design time: 9hr 37mins
+
 ## June 11, 2025
 Chose ESP32-C3 Seeed XIAO for MCU since I use XIAO for everything. DHT11 for temp and humidity info to estimate the speed of sound for the ultrasonic distance sensor.
 
