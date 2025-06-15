@@ -7,6 +7,8 @@ created_at: "2025-06-11"
 
 # adhdgym
 
+Total Design time: 9hr 37mins
+
 ## June 11, 2025
 Chose ESP32-C3 Seeed XIAO for MCU since I use XIAO for everything. DHT11 for temp and humidity info to estimate the speed of sound for the ultrasonic distance sensor.
 
@@ -40,3 +42,7 @@ I was only able to use my phone to do this, so I had to learn how to use onshape
 Time spent: 30mins
 
 I added the screenshots for PCB, Schematics and CAD to the README.md, and also added a BOM.
+
+Time spent: 2hr
+
+Writing firmware is hard. Especially when you don't have the microcontroller or even something similar to the one you're using. 
