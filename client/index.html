@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>adhdgym</title>
+  <style>
+    body {
+      margin: 0;
+      overflow: hidden;
+      background: black;
+      font-family: sans-serif;
+      color: white;
+    }
+    #connectBtn {
+      position: absolute;
+      top: 20px;
+      right: 20px;
+      left: auto;
+      z-index: 10;
+      padding: 10px 20px;
+      font-size: 16px;
+      background: #222;
+      color: white;
+      border: 1px solid white;
+      cursor: pointer;
+    }
+    #connectBtn:hover {
+      background: #444;
+    }
+
+    #controls {
+      position: absolute;
+      top: 20px;
+      right: 140px;
+      z-index: 10;
+      background: rgba(0,0,0,0.6);
+      padding: 10px;
+      border: 1px solid white;
+      font-size: 14px;
+      line-height: 1.4;
+    }
+    #controls label {
+      display: block;
+      margin-bottom: 4px;
+    }
+    #controls input,
+    #controls select {
+      width: 100%;
+      margin-bottom: 8px;
+    }
+
+    canvas {
+      image-rendering: pixelated;
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <button id="connectBtn" onclick="connect()">Connect</button>
+
+  <div id="controls">
+    <label>
+      Amplitude (<span id="ampUnitLabel">px</span>):
+      <select id="ampUnit">
+        <option value="px">pixels</option>
+        <option value="dist">distance</option>
+      </select>
+    </label>
+    <input type="range" id="ampSlider" min="0" max="200" value="100">
+
+    <label>
+      Frequency:
+      <input type="range" id="freqSlider" min="0.001" max="0.1" step="0.001" value="0.01">
+    </label>
+  </div>
+
+  <canvas id="canvas"></canvas>
+
+  <script>
+    const SERVICE_UUID        = '1f45750b-771b-460b-92ca-fdc00d263aee';
+    const CHARACTERISTIC_UUID = '064805b7-1272-436b-9683-a94509066057';
+    const maxDist             = 300; // for distance‑mode mapping
+
+    const canvas    = document.getElementById('canvas');
+    const ctx       = canvas.getContext('2d');
+
+    // controls
+    const ampUnit    = document.getElementById('ampUnit');
+    const ampUnitLbl = document.getElementById('ampUnitLabel');
+    const ampSlider  = document.getElementById('ampSlider');
+    const freqSlider = document.getElementById('freqSlider');
+
+    let fallbackMode = false;
+    let message      = 'Waiting...';
+    let t            = 0;
+    let score        = 0;
+
+    // dynamic parameters
+    let ampMode   = ampUnit.value;   // 'px' or 'dist'
+    let freqValue = parseFloat(freqSlider.value);
+
+    const thickness   = 50;
+    const gemInterval = 150;
+    const gemRadius   = 8;
+    const gemSpeed    = 2;
+
+    let gemTimer     = 0;
+    let gemPositions = [];
+
+    // dumbbell
+    let dumbbellY      = 0;
+    const dumbbellX    = 80;
+    const dumbbellRad  = 15;
+
+    function resizeCanvas(){
+      canvas.width  = window.innerWidth;
+      canvas.height = window.innerHeight;
+      // adjust amplitude slider max when in px‑mode
+      if(ampMode === 'px'){
+        ampSlider.max = canvas.height/2;
+      } else {
+        ampSlider.max = maxDist;
+      }
+      // reset
+      gemPositions = [];
+      gemTimer     = 0;
+      score        = 0;
+      dumbbellY    = canvas.height/2;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    // update mode label & slider max
+    ampUnit.addEventListener('change', () => {
+      ampMode = ampUnit.value;
+      ampUnitLbl.textContent = ampMode === 'px' ? 'px' : 'dist';
+      ampSlider.max = ampMode === 'px' ? canvas.height/2 : maxDist;
+      ampSlider.value = ampSlider.max/2;
+    });
+
+    freqSlider.addEventListener('input', () => {
+      freqValue = parseFloat(freqSlider.value);
+    });
+
+    function getAmpPx(){
+      const v = parseFloat(ampSlider.value);
+      if(ampMode === 'px'){
+        return v;
+      } else {
+        // map distance [0,maxDist] → pixels [0,canvas.height/2]
+        return v / maxDist * (canvas.height/2);
+      }
+    }
+
+    function drawDumbbell(x,y){
+      ctx.save();
+      ctx.translate(x,y);
+      ctx.fillStyle   = 'orange';
+      ctx.strokeStyle = 'white';
+      ctx.lineWidth   = 2;
+      // bar
+      ctx.beginPath();
+      ctx.rect(-30,-7,60,14);
+      ctx.fill(); ctx.stroke();
+      // left weight
+      ctx.beginPath();
+      ctx.arc(-30,0,dumbbellRad,0,2*Math.PI);
+      ctx.fill(); ctx.stroke();
+      // right weight
+      ctx.beginPath();
+      ctx.arc(30,0,dumbbellRad,0,2*Math.PI);
+      ctx.fill(); ctx.stroke();
+      ctx.restore();
+    }
+
+    function draw(){
+      // clear
+      ctx.fillStyle = 'black';
+      ctx.fillRect(0,0,canvas.width,canvas.height);
+
+      // compute amp this frame
+      const ampPx = getAmpPx();
+
+      // sine wave
+      ctx.fillStyle = 'gray';
+
+
+			ctx.beginPath();
+			ctx.lineWidth = thickness;
+			ctx.strokeStyle = "gray"; // or any color you want
+
+			for (let x = -thickness; x < canvas.width+thickness; x++) {
+				const phase = (x + t) * freqValue;
+				const y = canvas.height / 2 + Math.sin(phase) * ampPx;
+
+				if (x === -thickness) {
+					ctx.moveTo(x, y);
+				} else {
+					ctx.lineTo(x, y);
+				}
+			}
+
+			ctx.stroke();
+
+
+      // gems
+      ctx.fillStyle = 'turquoise';
+      for(let i=gemPositions.length-1;i>=0;i--){
+        const gem = gemPositions[i];
+        gem.x -= gemSpeed;
+        const gy = canvas.height/2 + Math.sin((gem.x+t)*freqValue)*ampPx;
+
+        // collision?
+        const dx = gem.x - dumbbellX;
+        const dy = gy - dumbbellY;
+        if(Math.hypot(dx,dy) < gemRadius + dumbbellRad){
+          gemPositions.splice(i,1);
+          score++;
+          continue;
+        }
+        // offscreen?
+        if(gem.x < -gemRadius){
+          gemPositions.splice(i,1);
+          continue;
+        }
+        ctx.beginPath();
+        ctx.arc(Math.round(gem.x), Math.round(gy), gemRadius,0,2*Math.PI);
+        ctx.fill();
+      }
+
+      // spawn gems
+      gemTimer += gemSpeed;
+      if(gemTimer >= gemInterval){
+        gemTimer = 0;
+        gemPositions.push({ x: canvas.width + gemRadius });
+      }
+
+      // dumbbell
+      drawDumbbell(dumbbellX,dumbbellY);
+
+      // UI text
+      ctx.fillStyle = 'white';
+      ctx.font = '24px monospace';
+      ctx.fillText(message, 50,50);
+      ctx.fillText('Score: '+score, 50,80);
+
+      t += gemSpeed;
+      requestAnimationFrame(draw);
+    }
+    draw();
+
+    // BLE / fallback
+    async function connect(){
+      try {
+        const device = await navigator.bluetooth.requestDevice({
+          filters:[{name:'adhdgym'}],
+          optionalServices:[SERVICE_UUID]
+        });
+        const server  = await device.gatt.connect();
+        const service = await server.getPrimaryService(SERVICE_UUID);
+        const char    = await service.getCharacteristic(CHARACTERISTIC_UUID);
+        await char.startNotifications();
+        char.addEventListener('characteristicvaluechanged', e=>{
+          const val    = new TextDecoder().decode(e.target.value);
+          const parsed = parseFloat(val);
+          if(!isNaN(parsed)){
+            const c = Math.min(Math.max(parsed,0),maxDist);
+            dumbbellY = canvas.height*(1 - c/maxDist);
+          }
+          message = val;
+        });
+        fallbackMode = false;
+        message      = 'Connected! Waiting for data…';
+      } catch(err){
+        console.warn(err);
+        fallbackMode = true;
+        message      = '⚠️ BLE failed – using mouse';
+      }
+    }
+
+    document.body.addEventListener('mousemove', e=>{
+      if(!fallbackMode) return;
+      dumbbellY = e.clientY;
+      message   = `🖱️ Dist: ${e.clientY.toFixed(1)} px`;
+    });
+  </script>
+</body>
+</html>
+
