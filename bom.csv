@@ -1,0 +1,6 @@
+Item,Quantity,Description,Link,Notes
+PCB and Case,1,Custom PCB and 3D-printed case,,User will 3D print
+1x4 DuPont Connector,1,2.54mm Socket,,i already have some
+Seeed XIAO ESP32-C3,1,Microcontroller,"https://www.seeedstudio.com/Seeed-XIAO-ESP32C3-p-5431.html",
+DHT11,1,Temperature and Humidity Sensor,"https://lcsc.com/product-detail/Temperature-and-Humidity-Sensor_Aosong-Guangzhou-Elec-DHT11_C117051.html?s_z=n_dht11",
+HC-SR04,1,Ultrasonic Distance Sensor,"https://www.aliexpress.com/item/1005008259734214.html",Ensure pins are on the non-speaker side
