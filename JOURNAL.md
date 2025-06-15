@@ -46,3 +46,9 @@ I added the screenshots for PCB, Schematics and CAD to the README.md, and also a
 Time spent: 2hr
 
 Writing firmware is hard. Especially when you don't have the microcontroller or even something similar to the one you're using. 
+
+## June 15, 2025
+Time spent: 3hr
+
+Writing code is hard. Especially when you decided to use vanilla html, js and css. i chose to use [vanilla js](http://vanilla-js.com/) because its very light weight and adds a whole zero bytes to my build size (im not even buliding anything) I decided to use the vanilla canvas api. note to self: dont use the vanilla canvas api next time.
+![1749993224-wayshot](https://github.com/user-attachments/assets/20c145d9-2074-4586-83fd-db35d9613086)
