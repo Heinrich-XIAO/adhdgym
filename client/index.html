@@ -60,11 +60,7 @@
 
   <div id="controls">
     <label>
-      Amplitude (<span id="ampUnitLabel">px</span>):
-      <select id="ampUnit">
-        <option value="px">pixels</option>
-        <option value="dist">distance</option>
-      </select>
+      Amplitude:
     </label>
     <input type="range" id="ampSlider" min="0" max="3" value="1">
     <input type="range" id="offsetSlider" min="-200" max="200" value="0">
@@ -86,8 +82,6 @@
     const ctx       = canvas.getContext('2d');
 
     // controls
-    const ampUnit    = document.getElementById('ampUnit');
-    const ampUnitLbl = document.getElementById('ampUnitLabel');
     const ampSlider  = document.getElementById('ampSlider');
     const offsetSlider=document.getElementById('offsetSlider');
     const freqSlider = document.getElementById('freqSlider');
@@ -97,8 +91,6 @@
     let t            = 0;
     let score        = 0;
 
-    // dynamic parameters
-    let ampMode   = ampUnit.value;   // 'px' or 'dist'
     let freqValue = parseFloat(freqSlider.value);
 
     const thickness   = 50;
@@ -117,12 +109,6 @@
     function resizeCanvas(){
       canvas.width  = window.innerWidth;
       canvas.height = window.innerHeight;
-      // adjust amplitude slider max when in px‑mode
-      if(ampMode === 'px'){
-        ampSlider.max = canvas.height/2;
-      } else {
-        ampSlider.max = maxDist;
-      }
       // reset
       gemPositions = [];
       gemTimer     = 0;
@@ -132,26 +118,13 @@
     window.addEventListener('resize', resizeCanvas);
     resizeCanvas();
 
-    // update mode label & slider max
-    ampUnit.addEventListener('change', () => {
-      ampMode = ampUnit.value;
-      ampUnitLbl.textContent = ampMode === 'px' ? 'px' : 'dist';
-      ampSlider.max = ampMode === 'px' ? canvas.height/2 : maxDist;
-      ampSlider.value = ampSlider.max/2;
-    });
-
     freqSlider.addEventListener('input', () => {
       freqValue = parseFloat(freqSlider.value);
     });
 
     function getAmpPx(){
       const v = parseFloat(ampSlider.value);
-      if(ampMode === 'px'){
-        return v;
-      } else {
-        // map distance [0,maxDist] → pixels [0,canvas.height/2]
-        return v / maxDist * (canvas.height/2);
-      }
+			return v;
     }
 
     function drawDumbbell(x,y){
@@ -246,9 +219,7 @@
       ctx.fillText('Score: '+score, 50,80);
 
 
-			console.log(message);
 			const match = message.match(/Dist:\s*([\d.]+)\s*cm/);
-			console.log(match);
 			if(match){
 				const c = parseFloat(match[1]);
 				dumbbellY = Math.round(canvas.height*(1 - c/maxDist*ampPx))+parseFloat(offsetSlider.value);
@@ -273,7 +244,6 @@
         char.addEventListener('characteristicvaluechanged', e=>{
           const val    = new TextDecoder().decode(e.target.value);
           const parsed = parseFloat(val);
-					console.log(val, parsed);
           message = val;
         });
         fallbackMode = false;
