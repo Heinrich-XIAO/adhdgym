@@ -192,7 +192,7 @@
 
 			for (let x = -thickness; x < canvas.width+thickness; x++) {
 				const phase = (x + t) * freqValue;
-				const y = canvas.height / 2 + Math.sin(phase);
+				const y = canvas.height / 2 + Math.sin(phase) * 100;
 
 				if (x === -thickness) {
 					ctx.moveTo(x, y);
@@ -209,7 +209,7 @@
       for(let i=gemPositions.length-1;i>=0;i--){
         const gem = gemPositions[i];
         gem.x -= gemSpeed;
-        const gy = canvas.height/2 + Math.sin((gem.x+t)*freqValue);
+        const gy = canvas.height/2 + Math.sin((gem.x+t)*freqValue) * 100;
 
         // collision?
         const dx = gem.x - dumbbellX;
