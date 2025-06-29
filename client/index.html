@@ -67,6 +67,7 @@
       </select>
     </label>
     <input type="range" id="ampSlider" min="0" max="200" value="100">
+    <input type="range" id="offsetSlider" min="-200" max="200" value="0">
 
     <label>
       Frequency:
@@ -88,6 +89,7 @@
     const ampUnit    = document.getElementById('ampUnit');
     const ampUnitLbl = document.getElementById('ampUnitLabel');
     const ampSlider  = document.getElementById('ampSlider');
+    const offsetSlider=document.getElementById('offsetSlider');
     const freqSlider = document.getElementById('freqSlider');
 
     let fallbackMode = false;
@@ -178,7 +180,6 @@
       ctx.fillStyle = 'black';
       ctx.fillRect(0,0,canvas.width,canvas.height);
 
-      // compute amp this frame
       const ampPx = getAmpPx();
 
       // sine wave
@@ -191,7 +192,7 @@
 
 			for (let x = -thickness; x < canvas.width+thickness; x++) {
 				const phase = (x + t) * freqValue;
-				const y = canvas.height / 2 + Math.sin(phase) * ampPx;
+				const y = canvas.height / 2 + Math.sin(phase);
 
 				if (x === -thickness) {
 					ctx.moveTo(x, y);
@@ -208,7 +209,7 @@
       for(let i=gemPositions.length-1;i>=0;i--){
         const gem = gemPositions[i];
         gem.x -= gemSpeed;
-        const gy = canvas.height/2 + Math.sin((gem.x+t)*freqValue)*ampPx;
+        const gy = canvas.height/2 + Math.sin((gem.x+t)*freqValue);
 
         // collision?
         const dx = gem.x - dumbbellX;
@@ -250,7 +251,7 @@
 			console.log(match);
 			if(match){
 				const c = parseFloat(match[1]);
-				dumbbellY = canvas.height*(1 - c/maxDist);
+				dumbbellY = Math.round(canvas.height*(1 - c/maxDist)*ampPx/100)+parseFloat(offsetSlider.value);
 			}
 
       t += gemSpeed;
