@@ -79,7 +79,7 @@
   <script>
     const SERVICE_UUID        = '1f45750b-771b-460b-92ca-fdc00d263aee';
     const CHARACTERISTIC_UUID = '064805b7-1272-436b-9683-a94509066057';
-    const maxDist             = 300; // for distance‑mode mapping
+    const maxDist             = 200; // for distance‑mode mapping
 
     const canvas    = document.getElementById('canvas');
     const ctx       = canvas.getContext('2d');
@@ -244,6 +244,15 @@
       ctx.fillText(message, 50,50);
       ctx.fillText('Score: '+score, 50,80);
 
+
+			console.log(message);
+			const match = message.match(/Dist:\s*([\d.]+)\s*cm/);
+			console.log(match);
+			if(match){
+				const c = parseFloat(match[1]);
+				dumbbellY = canvas.height*(1 - c/maxDist);
+			}
+
       t += gemSpeed;
       requestAnimationFrame(draw);
     }
@@ -263,10 +272,7 @@
         char.addEventListener('characteristicvaluechanged', e=>{
           const val    = new TextDecoder().decode(e.target.value);
           const parsed = parseFloat(val);
-          if(!isNaN(parsed)){
-            const c = Math.min(Math.max(parsed,0),maxDist);
-            dumbbellY = canvas.height*(1 - c/maxDist);
-          }
+					console.log(val, parsed);
           message = val;
         });
         fallbackMode = false;
