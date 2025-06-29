@@ -251,7 +251,7 @@
 			console.log(match);
 			if(match){
 				const c = parseFloat(match[1]);
-				dumbbellY = Math.round(canvas.height*(1 - c/maxDist)*ampPx)+parseFloat(offsetSlider.value);
+				dumbbellY = Math.round(canvas.height*(1 - c/maxDist*ampPx))+parseFloat(offsetSlider.value);
 			}
 
       t += gemSpeed;
