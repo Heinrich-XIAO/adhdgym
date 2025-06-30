@@ -69,6 +69,13 @@
       Frequency:
       <input type="range" id="freqSlider" min="0.001" max="0.1" step="0.001" value="0.01">
     </label>
+
+    <div id="presets">
+      <label for="presetSelect">Presets:</label>
+      <select id="presetSelect"></select>
+      <button id="savePresetBtn">Save Preset</button>
+      <button id="deletePresetBtn">Delete Preset</button>
+    </div>
   </div>
 
   <canvas id="canvas"></canvas>
@@ -262,12 +269,72 @@
       }
     }
 
-    document.body.addEventListener('mousemove', e=>{
+    """    document.body.addEventListener('mousemove', e=>{
       if(!fallbackMode) return;
       dumbbellY = e.clientY;
       message   = `🖱️ Dist: ${e.clientY.toFixed(1)} px`;
     });
-  </script>
+
+    // Presets
+    const presetSelect = document.getElementById('presetSelect');
+    const savePresetBtn = document.getElementById('savePresetBtn');
+    const deletePresetBtn = document.getElementById('deletePresetBtn');
+
+    function loadPresets() {
+      const presets = JSON.parse(localStorage.getItem('presets')) || {};
+      presetSelect.innerHTML = '';
+      for (const name in presets) {
+        const option = document.createElement('option');
+        option.value = name;
+        option.textContent = name;
+        presetSelect.appendChild(option);
+      }
+    }
+
+    function savePreset() {
+      const name = prompt('Enter a name for this preset:');
+      if (name) {
+        const presets = JSON.parse(localStorage.getItem('presets')) || {};
+        presets[name] = {
+          frequency: freqSlider.value,
+          amplitude: ampSlider.value,
+          offset: offsetSlider.value
+        };
+        localStorage.setItem('presets', JSON.stringify(presets));
+        loadPresets();
+        presetSelect.value = name;
+      }
+    }
+
+    function deletePreset() {
+      const name = presetSelect.value;
+      if (name) {
+        const presets = JSON.parse(localStorage.getItem('presets')) || {};
+        delete presets[name];
+        localStorage.setItem('presets', JSON.stringify(presets));
+        loadPresets();
+      }
+    }
+
+    function applyPreset() {
+      const name = presetSelect.value;
+      const presets = JSON.parse(localStorage.getItem('presets')) || {};
+      if (presets[name]) {
+        freqSlider.value = presets[name].frequency;
+        ampSlider.value = presets[name].amplitude;
+        offsetSlider.value = presets[name].offset;
+        // Manually trigger input event to update the values
+        freqSlider.dispatchEvent(new Event('input'));
+      }
+    }
+
+    savePresetBtn.addEventListener('click', savePreset);
+    deletePresetBtn.addEventListener('click', deletePreset);
+presetSelect.addEventListener('change', applyPreset);
+
+    loadPresets();
+    applyPreset();
+  </script>""
 </body>
 </html>
 
