@@ -13,6 +13,8 @@ Total Design time: 9hr 37mins
 
 Total Coding time: 5hr
 
+Total Building time: 2hr 30mins
+
 ## June 11, 2025
 Chose ESP32-C3 Seeed XIAO for MCU since I use XIAO for everything. DHT11 for temp and humidity info to estimate the speed of sound for the ultrasonic distance sensor.
 
@@ -56,3 +58,8 @@ Time spent: 3hr
 
 Writing code is hard. Especially when you decided to use vanilla html, js and css. i chose to use [vanilla js](http://vanilla-js.com/) because its very light weight and adds a whole zero bytes to my build size (im not even buliding anything) I decided to use the vanilla canvas api. note to self: dont use the vanilla canvas api next time.
 ![1749993224-wayshot](https://github.com/user-attachments/assets/20c145d9-2074-4586-83fd-db35d9613086)
+
+## June 29, 2025
+Time spent: 2hr 30mins
+Soldered stuff also fixed the code, installed the right libraries and stuff.
+![Photo du 2025-06-29 20-33-00 358640](https://github.com/user-attachments/assets/41655533-4917-407f-b8fa-288f29c50905)
