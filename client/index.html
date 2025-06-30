@@ -91,6 +91,10 @@
     let t            = 0;
     let score        = 0;
 
+
+		const smoothingFactor = 0.2; // 0=no change, 1=instant change
+
+
     let freqValue = parseFloat(freqSlider.value);
 
     const thickness   = 50;
@@ -218,12 +222,15 @@
       ctx.fillText(message, 50,50);
       ctx.fillText('Score: '+score, 50,80);
 
-
 			const match = message.match(/Dist:\s*([\d.]+)\s*cm/);
-			if(match){
+			if (match) {
 				const c = parseFloat(match[1]);
-				if (c > 0) dumbbellY = Math.round(canvas.height*(1 - c/maxDist*ampPx))+parseFloat(offsetSlider.value);
+				if (c > 0) {
+					const targetY = Math.round(canvas.height * (1 - c / maxDist * ampPx)) + parseFloat(offsetSlider.value);
+					dumbbellY = dumbbellY * (1 - smoothingFactor) + targetY * smoothingFactor;
+				}
 			}
+
 
       t += gemSpeed;
       requestAnimationFrame(draw);
