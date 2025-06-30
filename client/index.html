@@ -233,7 +233,7 @@
 			if (match) {
 				const c = parseFloat(match[1]);
 				if (c > 0) {
-					const targetY = Math.round(canvas.height * (1 - c / maxDist * ampPx)) + parseFloat(offsetSlider.value);
+					const targetY = canvas.height / 2 + Math.round(canvas.height/2 * (1 - c / maxDist * ampPx)) + parseFloat(offsetSlider.value);
 					dumbbellY = dumbbellY * (1 - smoothingFactor) + targetY * smoothingFactor;
 				}
 			}
