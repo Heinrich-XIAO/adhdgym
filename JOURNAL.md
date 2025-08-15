@@ -63,3 +63,8 @@ Writing code is hard. Especially when you decided to use vanilla html, js and cs
 Time spent: 2hr 30mins
 Soldered stuff also fixed the code, installed the right libraries and stuff.
 ![Photo du 2025-06-29 20-33-00 358640](https://github.com/user-attachments/assets/41655533-4917-407f-b8fa-288f29c50905)
+
+## whenever the highway deadline was. i think august 7th or smth like that.
+Time spent: 2hr exactly (from 10:00pm to midnight)
+I looked for all the shit that i lost, i had a shortage of usb-c cables, so i had to find on, but then i was too short (size matters), so i found a longer one. then, the ble didn't work for some reason, so i had to vibe code a shitty solution for getting it to work via serial.
+
