@@ -17,6 +17,7 @@ adhdgym is a simple ultrasonic distance sensor that relays the distance to your 
 
 ## Build
 <img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/5585eb7f-dc7f-4c70-b7c7-4ebfd29f7d71" />
+https://youtube.com/shorts/1jzXrwt-IXw
 
 
 ## BOM
