@@ -15,6 +15,9 @@ adhdgym is a simple ultrasonic distance sensor that relays the distance to your 
 ## Client
 ![1749993613-wayshot](https://github.com/user-attachments/assets/9e5725bb-5545-4c68-b3db-262c994fcd1c)
 
+## Build
+<img width="1280" height="720" alt="image" src="https://github.com/user-attachments/assets/5585eb7f-dc7f-4c70-b7c7-4ebfd29f7d71" />
+
 
 ## BOM
  - PCB and Case (I can 3D print myself)  $19.60 for pcb with jlc
